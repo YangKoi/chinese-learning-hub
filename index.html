@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/chinese-learning-hub/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Optimization -->
+    <title>Chinese Learning Hub — Tự Học & Luyện Tiếng Trung Đỉnh Cao</title>
+    <meta name="description" content="Trang web tự học và ôn tập tiếng Trung trực quan dành cho người mới bắt đầu. Học bảng phiên âm Pinyin, luyện viết chữ Hán nét vẽ chuẩn, ôn tập từ vựng HSK 1 qua Flashcard 3D và thử thách Đấu trường Trắc nghiệm." />
+    <meta name="keywords" content="tự học tiếng Trung, học tiếng Trung cho người mới, bảng chữ cái tiếng Trung, Pinyin, từ vựng HSK 1, Flashcard tiếng Trung, tập viết chữ Hán, trắc nghiệm tiếng Trung" />
+    <meta name="author" content="Chinese Learning Hub Team" />
+    
+    <!-- Open Graph (Facebook / Zalo shares) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Chinese Learning Hub — Tự Học & Luyện Tiếng Trung Đỉnh Cao" />
+    <meta property="og:description" content="Tự học tiếng Trung hiệu quả với giao diện Glassmorphism đỉnh cao. Tích hợp Flashcards, Canvas vẽ chữ Hán và ôn tập Firebase Cloud Sync." />
+    <meta property="og:image" content="/chinese-learning-hub/favicon.svg" />
+    
+    <!-- CSS Stylesheet -->
+    <script type="module" crossorigin src="/chinese-learning-hub/assets/index-C4pt4kJk.js"></script>
+    <link rel="stylesheet" crossorigin href="/chinese-learning-hub/assets/index-D9EQqsJ4.css">
+  </head>
+  <body>
+    <!-- App Layout Container -->
+    <div class="app-container">
+      
+      <!-- Glowing Orbs Background -->
+      <div class="orb-glow orb-1" id="orb-left"></div>
+      <div class="orb-glow orb-2" id="orb-right"></div>
+      
+      <!-- 1. Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="logo-container">
+          <div class="logo-icon">中</div>
+          <span class="logo-text">Chinese Hub</span>
+        </div>
+        
+        <nav class="nav-container">
+          <ul class="nav-links">
+            <li class="nav-item">
+              <a class="nav-link active" data-target="dashboard" id="nav-dashboard">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Trang chủ</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-target="pinyin" id="nav-pinyin">
+                <i data-lucide="volume-2"></i>
+                <span>Phát âm Pinyin</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-target="flashcard" id="nav-flashcard">
+                <i data-lucide="credit-card"></i>
+                <span>Từ vựng Flashcard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-target="hanzi" id="nav-hanzi">
+                <i data-lucide="pen-tool"></i>
+                <span>Luyện viết chữ Hán</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-target="quiz" id="nav-quiz">
+                <i data-lucide="trophy"></i>
+                <span>Đấu trường Quiz</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-target="settings" id="nav-settings">
+                <i data-lucide="cloud"></i>
+                <span>Đồng bộ Đám mây</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+          <div class="profile-card" id="sidebar-profile-card">
+            <div class="profile-avatar" id="sidebar-avatar">G</div>
+            <div class="profile-info">
+              <span class="profile-name" id="sidebar-username">Khách ẩn danh</span>
+              <span class="profile-status" id="sidebar-status">Bấm để đăng nhập</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+      
+      <!-- 2. Main Content Area -->
+      <main class="main-content">
+        
+        <!-- Header -->
+        <header class="main-header">
+          <div class="header-welcome">
+            <h1 id="header-title">Chào mừng, Học viên!</h1>
+            <p id="header-subtitle">Hôm nay bạn muốn rèn luyện kỹ năng gì nào?</p>
+          </div>
+          
+          <div class="header-actions">
+            <!-- User Stats Indicators -->
+            <div class="user-badges">
+              <div class="badge-item streak" title="Chuỗi ngày học liên tiếp">
+                <i data-lucide="flame"></i>
+                <span id="streak-count">0</span> ngày
+              </div>
+              <div class="badge-item xp" title="Điểm kinh nghiệm tích lũy">
+                <i data-lucide="sparkles"></i>
+                <span id="xp-count">0</span> XP
+              </div>
+            </div>
+            
+            <!-- Dark/Light Theme Toggle -->
+            <button class="theme-toggle" id="theme-toggle-btn" aria-label="Đổi chế độ sáng tối">
+              <i data-lucide="sun" id="theme-icon"></i>
+            </button>
+          </div>
+        </header>
+        
+        <!-- Dynamic Content Sections -->
+        
+        <!-- ===================================================================
+             A. SECTION: DASHBOARD (HOME)
+             =================================================================== -->
+        <section class="app-section active" id="dashboard-section">
+          <!-- Banner thống kê -->
+          <div class="stats-banner">
+            <div class="glass-card stat-box streak-box">
+              <div class="stat-icon"><i data-lucide="flame"></i></div>
+              <div class="stat-details">
+                <h4>Chuỗi học tập</h4>
+                <p><span id="db-streak">0</span> ngày</p>
+              </div>
+            </div>
+            <div class="glass-card stat-box xp-box">
+              <div class="stat-icon"><i data-lucide="sparkles"></i></div>
+              <div class="stat-details">
+                <h4>Tổng điểm XP</h4>
+                <p><span id="db-xp">0</span> XP</p>
+              </div>
+            </div>
+            <div class="glass-card stat-box level-box">
+              <div class="stat-icon"><i data-lucide="trophy"></i></div>
+              <div class="stat-details">
+                <h4>Trình độ hiện tại</h4>
+                <p>Cấp <span id="db-level">1</span></p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Bố cục lưới Dashboard -->
+          <div class="section-grid-2">
+            <!-- Lộ trình học tương tác -->
+            <div class="glass-card">
+              <h2 class="card-title"><i data-lucide="map"></i> Lộ trình học tiếng Trung vỡ lòng</h2>
+              <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                Bản đồ các chủ đề cơ bản thiết kế riêng cho người mới. Hãy học từ vựng và làm Quiz để mở khóa các chặng tiếp theo!
+              </p>
+              
+              <div class="roadmap-container">
+                <div class="roadmap-timeline" id="learning-roadmap">
+                  <!-- Lộ trình được render động bằng JS -->
+                </div>
+              </div>
+            </div>
+            
+            <!-- Cột thống kê phụ & Mục tiêu ngày -->
+            <div class="glass-card progress-ring-card">
+              <h2 class="card-title"><i data-lucide="target"></i> Mục tiêu hôm nay</h2>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">Hoàn thành 30 XP để đạt mục tiêu ngày!</p>
+              
+              <!-- Vòng tròn tiến trình SVG -->
+              <div class="svg-progress-container">
+                <svg width="150" height="150">
+                  <circle stroke="var(--border-glass)" stroke-width="10" fill="transparent" r="60" cx="75" cy="75"/>
+                  <circle class="progress-ring-circle" id="daily-progress-ring" stroke="var(--color-primary)" stroke-width="10" stroke-linecap="round" fill="transparent" r="60" cx="75" cy="75" stroke-dasharray="377" stroke-dashoffset="377" />
+                </svg>
+                <div class="progress-ring-value"><span id="daily-xp-percent">0</span>%</div>
+              </div>
+              
+              <div style="width: 100%; text-align: left; margin-top: 1rem;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.5rem;">
+                  <span>Tiến độ XP:</span>
+                  <span><span id="daily-current-xp">0</span> / 30 XP</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); padding-top: 1rem;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i data-lucide="check" style="color: var(--color-primary); width:16px; height:16px;"></i>
+                    <span>Học từ vựng Flashcard (+10 XP)</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i data-lucide="check" style="color: var(--color-primary); width:16px; height:16px;"></i>
+                    <span>Tập vẽ chữ Hán (+10 XP)</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i data-lucide="check" style="color: var(--color-primary); width:16px; height:16px;"></i>
+                    <span>Vượt ải Đấu trường Quiz (+15 XP)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- ===================================================================
+             B. SECTION: PINYIN (PHÁT ÂM)
+             =================================================================== -->
+        <section class="app-section" id="pinyin-section">
+          <div class="section-grid-2">
+            <!-- Bảng phát âm tương tác -->
+            <div class="glass-card">
+              <h2 class="card-title"><i data-lucide="volume-2"></i> Bảng phát âm Pinyin tương tác</h2>
+              
+              <!-- Tabs phân loại -->
+              <div class="pinyin-tabs">
+                <button class="pinyin-tab-btn active" data-tab="initials" id="btn-tab-initials">Thanh Mẫu (Phụ âm)</button>
+                <button class="pinyin-tab-btn" data-tab="finals" id="btn-tab-finals">Vận Mẫu (Nguyên âm)</button>
+                <button class="pinyin-tab-btn" data-tab="tones" id="btn-tab-tones">Thanh Điệu (Dấu)</button>
+              </div>
+              
+              <!-- Lưới phát âm -->
+              <div class="pinyin-grid" id="pinyin-items-grid">
+                <!-- Pinyin Cards được render động bằng JS -->
+              </div>
+            </div>
+            
+            <!-- Chi tiết âm & Mini game phụ -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+              <!-- Bảng chi tiết âm -->
+              <div class="glass-card" id="pinyin-detail-panel">
+                <h2 class="card-title"><i data-lucide="info"></i> Chi tiết âm đọc</h2>
+                <div class="pinyin-detail-placeholder" id="pinyin-placeholder">
+                  <i data-lucide="volume-1"></i>
+                  <p>Bấm vào một âm bất kỳ ở bảng bên trái để nghe phát âm và xem hướng dẫn chi tiết cách đọc.</p>
+                </div>
+                <div class="pinyin-detail-card" id="pinyin-detail-content" style="display: none;">
+                  <h3 id="detail-sound">b</h3>
+                  <span class="ipa" id="detail-ipa">[p]</span>
+                  
+                  <div class="pinyin-detail-item">
+                    <h4>Cách đọc tương đối (tiếng Việt)</h4>
+                    <p id="detail-read">pua</p>
+                  </div>
+                  <div class="pinyin-detail-item">
+                    <h4>Hướng dẫn khẩu hình</h4>
+                    <p id="detail-desc">Giống âm p trong tiếng Việt nhưng không bật hơi</p>
+                  </div>
+                  <div class="pinyin-detail-item">
+                    <h4>Từ ví dụ</h4>
+                    <p id="detail-example" style="font-weight: 700; color: var(--color-secondary);">ba (bố)</p>
+                  </div>
+                  <button class="btn btn-primary" id="detail-play-sound-btn" style="margin-top: 1rem; width: 100%;">
+                    <i data-lucide="play"></i> Phát âm chuẩn
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Luyện tai nghe (Mini-game) -->
+              <div class="glass-card tone-game">
+                <h2 class="card-title" style="font-size: 1.15rem;"><i data-lucide="headphones"></i> Luyện nghe thanh điệu</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Nghe âm thanh phát ra và đoán xem đó là thanh điệu thứ mấy?</p>
+                
+                <button class="game-play-btn" id="tone-game-play-btn">
+                  <i data-lucide="play"></i> Bấm để nghe âm mẫu
+                </button>
+                
+                <div class="game-options">
+                  <button class="game-opt-btn" data-tone="1">Thanh 1 (mā)</button>
+                  <button class="game-opt-btn" data-tone="2">Thanh 2 (má)</button>
+                  <button class="game-opt-btn" data-tone="3">Thanh 3 (mǎ)</button>
+                  <button class="game-opt-btn" data-tone="4">Thanh 4 (mà)</button>
+                </div>
+                <p id="tone-game-feedback" style="margin-top: 1rem; font-weight: 600; font-size: 0.9rem; text-align: center; min-height: 20px;"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- ===================================================================
+             C. SECTION: FLASHCARD (TỪ VỰNG)
+             =================================================================== -->
+        <section class="app-section" id="flashcard-section">
+          <div class="vocab-header-filter">
+            <div>
+              <label for="vocab-topic-select" style="display:none;">Chọn chủ đề:</label>
+              <select class="vocab-select" id="vocab-topic-select">
+                <!-- Chủ đề render động -->
+              </select>
+            </div>
+            
+            <div class="vocab-stats-summary">
+              <span>Đã thuộc: <span id="vocab-learned-count">0/34</span> từ</span>
+              <span>Yêu thích: <span id="vocab-favorite-count">0</span> từ</span>
+            </div>
+          </div>
+          
+          <!-- 3D Flashcard Wrapper -->
+          <div class="flashcard-wrapper" id="flashcard-box">
+            <div class="flashcard-inner" id="flashcard-inner-box">
+              
+              <!-- Front Face (Chữ Hán) -->
+              <div class="flashcard-face front">
+                <button class="card-favorite-btn" id="card-favorite-toggle" aria-label="Yêu thích từ vựng">
+                  <i data-lucide="heart"></i>
+                </button>
+                <div class="flashcard-content-main">
+                  <span class="hanzi-display" id="card-hanzi">你</span>
+                  <span class="pinyin-display" id="card-pinyin">nǐ</span>
+                  <span class="hanviet-display" id="card-hanviet">Nhĩ</span>
+                </div>
+                <span class="card-hint-text">Bấm vào thẻ để lật xem nghĩa</span>
+              </div>
+              
+              <!-- Back Face (Nghĩa) -->
+              <div class="flashcard-face back">
+                <div class="flashcard-content-main">
+                  <span class="meaning-display" id="card-meaning">Bạn, anh, chị</span>
+                  <div class="example-box">
+                    <div class="example-hz" id="card-example-hz">你好！</div>
+                    <div class="example-py" id="card-example-py">Nǐ hǎo!</div>
+                    <div class="example-vi" id="card-example-vi">Chào bạn!</div>
+                  </div>
+                </div>
+                <div class="flashcard-actions">
+                  <button class="card-speak-btn" id="card-audio-btn" aria-label="Nghe phát âm từ vựng">
+                    <i data-lucide="volume-2"></i>
+                  </button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          <!-- Flashcard Navigation Controls -->
+          <div class="card-navigation">
+            <button class="btn-nav-card" id="card-prev-btn" aria-label="Từ trước">
+              <i data-lucide="arrow-left"></i>
+            </button>
+            <span class="card-index" id="card-index-display">1 / 8</span>
+            <button class="btn-nav-card" id="card-next-btn" aria-label="Từ sau">
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+          
+          <!-- Đánh dấu từ đã học thuộc -->
+          <div class="vocab-learn-marker">
+            <button class="btn-mark-learned" id="card-learned-toggle">
+              <i data-lucide="check-circle"></i>
+              <span id="card-learned-text">Đánh dấu đã thuộc từ này</span>
+            </button>
+          </div>
+        </section>
+        
+        <!-- ===================================================================
+             D. SECTION: HANZI (TẬP VIẾT)
+             =================================================================== -->
+        <section class="app-section" id="hanzi-section">
+          <div class="hanzi-lab-layout">
+            <!-- Canvas viết tay & Hướng dẫn nét vẽ -->
+            <div class="glass-card" style="text-align: center;">
+              <h2 class="card-title" style="justify-content: center;"><i data-lucide="pen-tool"></i> Phòng thực hành viết chữ Hán</h2>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;" id="hanzi-meaning-guide">
+                Chữ Hán mẫu: <strong>一 (yī)</strong> — Một (Số 1)
+              </p>
+              
+              <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; align-items: center;">
+                <!-- Trình diễn nét viết SVG động -->
+                <div class="stroke-viewer-box">
+                  <span style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600;">Xem nét vẽ động</span>
+                  <div class="stroke-svg-container" id="stroke-svg-box">
+                    <!-- Các dòng kẻ hướng dẫn (Mễ tự ô 米) -->
+                    <svg class="stroke-svg-grid-lines" viewBox="0 0 100 100">
+                      <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(20, 184, 166, 0.15)" stroke-dasharray="4" stroke-width="1" />
+                      <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(20, 184, 166, 0.15)" stroke-dasharray="4" stroke-width="1" />
+                      <line x1="0" y1="0" x2="100" y2="100" stroke="rgba(20, 184, 166, 0.1)" stroke-dasharray="2" stroke-width="0.5" />
+                      <line x1="100" y1="0" x2="0" y2="100" stroke="rgba(20, 184, 166, 0.1)" stroke-dasharray="2" stroke-width="0.5" />
+                    </svg>
+                    <!-- Các đường vẽ SVG nét viết sẽ được append vào đây -->
+                    <svg id="stroke-animated-svg" viewBox="0 0 100 100" style="width:100%; height:100%;">
+                      <!-- Nét viết vẽ động -->
+                    </svg>
+                  </div>
+                  
+                  <div class="stroke-controls">
+                    <button class="btn btn-secondary" id="hanzi-play-stroke" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                      <i data-lucide="play" style="width:14px; height:14px;"></i> Chạy lại nét mẫu
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Bảng tập vẽ Canvas -->
+                <div>
+                  <span style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; display: block;">Tự vẽ trên Canvas</span>
+                  <div class="canvas-wrapper">
+                    <!-- Dòng kẻ ô mễ tự -->
+                    <svg class="canvas-grid-bg" viewBox="0 0 100 100" style="width:100%; height:100%;">
+                      <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(20, 184, 166, 0.2)" stroke-dasharray="4" stroke-width="1" />
+                      <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(20, 184, 166, 0.2)" stroke-dasharray="4" stroke-width="1" />
+                      <line x1="0" y1="0" x2="100" y2="100" stroke="rgba(20, 184, 166, 0.15)" stroke-dasharray="2" stroke-width="0.5" />
+                      <line x1="100" y1="0" x2="0" y2="100" stroke="rgba(20, 184, 166, 0.15)" stroke-dasharray="2" stroke-width="0.5" />
+                    </svg>
+                    <canvas class="hanzi-canvas" id="hanzi-sketchpad" width="280" height="280"></canvas>
+                  </div>
+                  
+                  <div class="canvas-stroke-actions">
+                    <button class="btn btn-danger" id="hanzi-clear-canvas" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                      <i data-lucide="trash-2" style="width:14px; height:14px;"></i> Xóa vẽ nháp
+                    </button>
+                    <button class="btn btn-primary" id="hanzi-submit-writing" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                      <i data-lucide="check" style="width:14px; height:14px;"></i> Xác nhận viết xong
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="writing-instructions" style="text-align: left;">
+                <p>💡 <strong>Hướng dẫn tập viết:</strong> <span id="hanzi-canvas-guide">Viết một nét ngang phẳng từ trái qua phải.</span></p>
+              </div>
+            </div>
+            
+            <!-- Danh sách chữ Hán & Học nét cơ bản -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+              <!-- Lựa chọn chữ Hán để viết -->
+              <div class="glass-card">
+                <h2 class="card-title"><i data-lucide="book-open"></i> Danh sách chữ vỡ lòng</h2>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Chọn một chữ Hán mẫu bên dưới để xem thứ tự nét và thực hành tập viết:</p>
+                <div class="hanzi-select-list" id="hanzi-selection-grid">
+                  <!-- Các chữ Hán được thêm động ở đây -->
+                </div>
+              </div>
+              
+              <!-- 8 Nét Cơ Bản -->
+              <div class="glass-card" style="max-height: 260px; overflow-y: auto;">
+                <h2 class="card-title" style="font-size: 1.1rem;"><i data-lucide="info"></i> 8 nét chữ Hán cơ bản</h2>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem;" id="basic-strokes-info-list">
+                  <!-- Render động bằng JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- ===================================================================
+             E. SECTION: QUIZ (LUYỆN TẬP)
+             =================================================================== -->
+        <section class="app-section" id="quiz-section">
+          <!-- Màn hình chào mừng Quiz -->
+          <div class="glass-card quiz-welcome-box" id="quiz-welcome-panel">
+            <i data-lucide="trophy"></i>
+            <h2>Đấu trường Quiz tiếng Trung vỡ lòng</h2>
+            <p style="color: var(--text-muted); max-width: 500px; margin: 0.5rem auto 1.5rem; line-height: 1.5;">
+              Vượt qua các câu hỏi trắc nghiệm âm đọc, trắc nghiệm nghĩa từ, nghe phát âm và sắp xếp câu để kiểm tra lượng kiến thức bạn tích lũy! Bạn sẽ nhận được điểm XP tương xứng khi hoàn thành bài thi.
+            </p>
+            <button class="btn btn-primary btn-accent" id="quiz-start-btn">
+              <i data-lucide="play"></i> Bắt đầu thi ngay (+15 XP)
+            </button>
+          </div>
+          
+          <!-- Màn hình làm Quiz -->
+          <div class="glass-card quiz-playground" id="quiz-play-panel">
+            <div class="quiz-header-bar">
+              <span style="font-weight: 700;" id="quiz-question-index">Câu hỏi: 1 / 8</span>
+              <div class="quiz-progress-bar-container">
+                <div class="quiz-progress-fill" id="quiz-progress-fill-bar"></div>
+              </div>
+              <span id="quiz-timer" style="font-weight: 700; color: var(--color-primary); display:none;">00:00</span>
+            </div>
+            
+            <div class="quiz-question-box">
+              <h2 id="quiz-question-text">Đang tải câu hỏi...</h2>
+              
+              <!-- Câu hỏi nghe nếu có -->
+              <div class="quiz-sound-container" id="quiz-listening-box" style="display: none;">
+                <button class="card-speak-btn" id="quiz-audio-play-btn" style="width:60px; height:60px;" aria-label="Phát âm thanh câu hỏi">
+                  <i data-lucide="volume-2" style="width:28px; height:28px;"></i>
+                </button>
+              </div>
+              
+              <div class="quiz-options-list" id="quiz-answers-list">
+                <!-- Câu trả lời render động -->
+              </div>
+            </div>
+            
+            <!-- Giải thích đáp án đúng -->
+            <div class="quiz-explanation-box" id="quiz-explain-card">
+              <strong>Giải thích:</strong> <span id="quiz-explain-text">...</span>
+            </div>
+            
+            <div class="quiz-footer">
+              <button class="btn btn-primary" id="quiz-next-btn" disabled>Câu tiếp theo <i data-lucide="arrow-right"></i></button>
+            </div>
+          </div>
+          
+          <!-- Màn hình kết quả sau thi -->
+          <div class="glass-card quiz-result-view" id="quiz-result-panel">
+            <i data-lucide="sparkles" style="font-size: 3rem; color: var(--color-primary); display: inline-block;"></i>
+            <h2>Hoàn thành xuất sắc!</h2>
+            <p style="color: var(--text-muted); margin-top: 0.25rem;">Bạn đã vượt qua bài thi ôn luyện tiếng Trung.</p>
+            
+            <div class="quiz-score-circle">
+              <span class="quiz-score-num" id="quiz-result-score">8/8</span>
+              <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color: var(--text-muted);">Đúng</span>
+            </div>
+            
+            <span class="quiz-xp-gain" id="quiz-result-xp-gain">+15 XP nhận thêm</span>
+            
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+              <button class="btn btn-secondary" id="quiz-retry-btn"><i data-lucide="refresh-cw"></i> Luyện lại bài thi</button>
+              <button class="btn btn-primary" id="quiz-finish-home-btn"><i data-lucide="home"></i> Quay về Trang chủ</button>
+            </div>
+          </div>
+        </section>
+        
+        <!-- ===================================================================
+             F. SECTION: SETTINGS (FIREBASE & SYNC)
+             =================================================================== -->
+        <section class="app-section" id="settings-section">
+          <div class="section-grid-2">
+            <!-- Firebase Connection Form -->
+            <div class="glass-card">
+              <h2 class="card-title"><i data-lucide="cloud"></i> Kết nối Google Firebase Cloud</h2>
+              
+              <div class="sync-status-badge offline" id="db-status-badge">
+                <i data-lucide="cloud-off"></i> <span>Chế độ: Lưu trữ trình duyệt (LocalStorage)</span>
+              </div>
+              
+              <p class="settings-info-text">
+                Ứng dụng hiện lưu trữ dữ liệu tại máy của bạn. Để đồng bộ hóa tiến độ học trên các thiết bị khác nhau, hãy tạo một dự án cá nhân tại <a href="https://console.firebase.google.com/" target="_blank" style="color: var(--color-primary); text-decoration: underline;">Firebase Console</a> và điền thông tin dự án Web App của bạn dưới đây. Dữ liệu sẽ tự động đồng bộ thời gian thực!
+              </p>
+              
+              <form id="firebase-config-form">
+                <div class="form-group">
+                  <label for="fb-apiKey">API Key *</label>
+                  <input type="password" class="form-control" id="fb-apiKey" required placeholder="AIzaSyA..." />
+                </div>
+                <div class="form-group">
+                  <label for="fb-authDomain">Auth Domain *</label>
+                  <input type="text" class="form-control" id="fb-authDomain" required placeholder="your-project-id.firebaseapp.com" />
+                </div>
+                <div class="form-group">
+                  <label for="fb-projectId">Project ID *</label>
+                  <input type="text" class="form-control" id="fb-projectId" required placeholder="your-project-id" />
+                </div>
+                <div class="form-group">
+                  <label for="fb-appId">App ID *</label>
+                  <input type="text" class="form-control" id="fb-appId" required placeholder="1:123456789:web:abcdef..." />
+                </div>
+                <div class="form-group">
+                  <label for="fb-storageBucket">Storage Bucket (Tùy chọn)</label>
+                  <input type="text" class="form-control" id="fb-storageBucket" placeholder="your-project-id.firebasestorage.app" />
+                </div>
+                
+                <div style="margin-top: 2rem; display: flex; gap: 1rem;" id="fb-form-actions-before">
+                  <button type="submit" class="btn btn-primary" style="flex: 1;"><i data-lucide="check"></i> Lưu cấu hình & Kết nối</button>
+                </div>
+              </form>
+              
+              <div style="margin-top: 2rem; display: none; gap: 1rem;" id="fb-form-actions-after">
+                <button class="btn btn-secondary" id="fb-disconnect-btn" style="flex: 1;"><i data-lucide="cloud-off"></i> Ngắt kết nối đám mây</button>
+              </div>
+            </div>
+            
+            <!-- Hướng dẫn nhanh & Quản lý dữ liệu thủ công -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+              <div class="glass-card">
+                <h2 class="card-title"><i data-lucide="info"></i> Hướng dẫn kết nối Firebase</h2>
+                <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                  <ol style="padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li>Truy cập <a href="https://console.firebase.google.com/" target="_blank" style="color: var(--color-primary);">Firebase Console</a>, nhấn <strong>Add project</strong> để tạo dự án mới.</li>
+                    <li>Vào mục <strong>Authentication</strong>, kích hoạt phương thức đăng nhập bằng <strong>Email/Password</strong> và <strong>Google</strong>.</li>
+                    <li>Vào mục <strong>Firestore Database</strong>, tạo một Database mới (chọn chế độ thử nghiệm test mode hoặc cấu hình rules cho phép đọc ghi).</li>
+                    <li>Ở phần cài đặt dự án (Project settings), kéo xuống dưới thêm một ứng dụng Web để lấy đoạn mã cấu hình (config object) chứa các thông số điền ở form bên cạnh.</li>
+                  </ol>
+                </div>
+              </div>
+              
+              <!-- Sao lưu thủ công -->
+              <div class="glass-card">
+                <h2 class="card-title"><i data-lucide="download"></i> Xuất / Nhập sao lưu cục bộ</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem; line-height: 1.4;">
+                  Bạn có thể tải dữ liệu tiến trình học tập hiện tại về máy dưới dạng file JSON hoặc khôi phục từ file có sẵn.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                  <button class="btn btn-secondary" id="backup-export-btn" style="width: 100%;">
+                    <i data-lucide="download"></i> Xuất file tiến trình (.json)
+                  </button>
+                  <button class="btn btn-secondary" id="backup-import-btn" style="width: 100%;">
+                    <i data-lucide="upload"></i> Nhập file tiến trình phục hồi
+                  </button>
+                  <input type="file" id="backup-file-input" style="display: none;" accept=".json" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+      </main>
+      
+    </div>
+    
+    <!-- =======================================================================
+         AUTHENTICATION OVERLAY MODAL (EMAIL & GOOGLE SIGN-IN)
+         ======================================================================= -->
+    <div class="auth-modal-overlay" id="auth-modal-box">
+      <div class="auth-modal-card">
+        <button class="auth-modal-close" id="auth-close-btn" aria-label="Đóng"><i data-lucide="x"></i></button>
+        
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" data-tab="login" id="auth-tab-login">Đăng nhập</button>
+          <button class="auth-tab-btn" data-tab="register" id="auth-tab-register">Đăng ký</button>
+        </div>
+        
+        <div class="auth-error-msg" id="auth-error-box">Thông tin đăng nhập không hợp lệ</div>
+        
+        <!-- Form Đăng nhập -->
+        <div class="auth-form-container active" id="auth-login-form-container">
+          <form id="auth-login-form">
+            <div class="form-group">
+              <label for="login-email">Địa chỉ Email</label>
+              <input type="email" class="form-control" id="login-email" required placeholder="example@gmail.com" />
+            </div>
+            <div class="form-group">
+              <label for="login-password">Mật khẩu</label>
+              <input type="password" class="form-control" id="login-password" required placeholder="Nhập mật khẩu" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Đăng nhập tài khoản</button>
+          </form>
+        </div>
+        
+        <!-- Form Đăng ký -->
+        <div class="auth-form-container" id="auth-register-form-container">
+          <form id="auth-register-form">
+            <div class="form-group">
+              <label for="register-name">Họ & tên học viên</label>
+              <input type="text" class="form-control" id="register-name" required placeholder="Ví dụ: Nguyễn Văn A" />
+            </div>
+            <div class="form-group">
+              <label for="register-email">Địa chỉ Email</label>
+              <input type="email" class="form-control" id="register-email" required placeholder="name@domain.com" />
+            </div>
+            <div class="form-group">
+              <label for="register-password">Mật khẩu (Ít nhất 6 ký tự)</label>
+              <input type="password" class="form-control" id="register-password" required placeholder="Nhập mật khẩu" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Đăng ký tài khoản mới</button>
+          </form>
+        </div>
+        
+        <div class="auth-divider">hoặc</div>
+        
+        <!-- Đăng nhập một chạm Google -->
+        <button class="btn-google-login" id="auth-google-btn">
+          <svg style="width:18px; height:18px;" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114-3.414 0-6.19-2.77-6.19-6.185 0-3.414 2.776-6.184 6.19-6.184 1.433 0 2.756.49 3.816 1.314l3.14-3.14C18.847 1.8 15.79 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c5.897 0 10.8-4.243 10.8-11.24 0-.637-.06-1.254-.173-1.955H12.24z"/>
+          </svg>
+          Đăng nhập bằng tài khoản Google
+        </button>
+      </div>
+    </div>
+    
+    <!-- Main JS Application script loaded as ES Module -->
+  </body>
+</html>
