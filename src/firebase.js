@@ -33,37 +33,54 @@ class FirebaseService {
   // Khởi tạo Firebase động
   init() {
     try {
-      const storedConfig = localStorage.getItem("chinese_learning_firebase_config");
-      if (storedConfig) {
-        const config = JSON.parse(storedConfig);
-        if (config && config.apiKey && config.projectId) {
-          // Initialize App
-          if (getApps().length === 0) {
-            this.app = initializeApp(config);
-          } else {
-            this.app = getApp();
-          }
-          this.auth = getAuth(this.app);
-          this.db = getFirestore(this.app);
-          this.isConfigured = true;
+      const defaultFirebaseConfig = {
+        apiKey: "AIzaSyBvgW6i3U4Gx2R_miM1H5aDT3FXCfB-uLs",
+        authDomain: "chinese-learning-hub-735ae.firebaseapp.com",
+        projectId: "chinese-learning-hub-735ae",
+        storageBucket: "chinese-learning-hub-735ae.firebasestorage.app",
+        messagingSenderId: "753882702996",
+        appId: "1:753882702996:web:5f16e95986c9d8bac6c081",
+        measurementId: "G-TJ9C4V1BYR"
+      };
 
-          // Thiết lập lắng nghe thay đổi Auth
-          onAuthStateChanged(this.auth, async (firebaseUser) => {
-            this.user = firebaseUser;
-            if (this.onAuthStateChangedCallback) {
-              this.onAuthStateChangedCallback(firebaseUser);
-            }
-          });
-          
-          console.log("🔥 Firebase đã được khởi tạo thành công từ cấu hình đã lưu!");
-          return true;
+      const storedConfig = localStorage.getItem("chinese_learning_firebase_config");
+      let config = null;
+
+      if (storedConfig === "offline") {
+        config = null;
+      } else if (storedConfig) {
+        config = JSON.parse(storedConfig);
+      } else {
+        config = defaultFirebaseConfig;
+      }
+
+      if (config && config.apiKey && config.projectId) {
+        // Initialize App
+        if (getApps().length === 0) {
+          this.app = initializeApp(config);
+        } else {
+          this.app = getApp();
         }
+        this.auth = getAuth(this.app);
+        this.db = getFirestore(this.app);
+        this.isConfigured = true;
+
+        // Thiết lập lắng nghe thay đổi Auth
+        onAuthStateChanged(this.auth, async (firebaseUser) => {
+          this.user = firebaseUser;
+          if (this.onAuthStateChangedCallback) {
+            this.onAuthStateChangedCallback(firebaseUser);
+          }
+        });
+        
+        console.log("🔥 Firebase đã được khởi tạo thành công!");
+        return true;
       }
     } catch (error) {
       console.warn("⚠️ Lỗi cấu hình Firebase hoặc chưa có cấu hình:", error);
     }
     
-    // Nếu chưa cấu hình, thiết lập trạng thái offline
+    // Nếu chưa cấu hình hoặc chọn offline, thiết lập trạng thái offline
     this.isConfigured = false;
     this.app = null;
     this.auth = null;
@@ -97,7 +114,7 @@ class FirebaseService {
 
   // Ngắt kết nối Firebase
   disconnectConfig() {
-    localStorage.removeItem("chinese_learning_firebase_config");
+    localStorage.setItem("chinese_learning_firebase_config", "offline");
     if (this.auth) {
       signOut(this.auth).catch(() => {});
     }
@@ -106,7 +123,7 @@ class FirebaseService {
     this.db = null;
     this.user = null;
     this.isConfigured = false;
-    console.log("🔌 Đã xóa cấu hình Firebase. Trở về chế độ Local Storage.");
+    console.log("🔌 Đã ngắt kết nối Firebase. Trở về chế độ Local Storage.");
   }
 
   // Đăng ký tài khoản
